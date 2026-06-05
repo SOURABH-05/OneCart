@@ -8,11 +8,13 @@ import {Routes, Route} from "react-router-dom"
 import { useContext } from 'react'
 import { adminDataContext } from './context/AdminContext'
 
+  import { ToastContainer} from 'react-toastify';
+
 const App = () => {
   const {adminData} = useContext(adminDataContext)
   return (
     <>
-    
+    <ToastContainer />
     {
       !adminData ? <Login/>:
     <>

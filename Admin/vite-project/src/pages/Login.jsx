@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Logo from "../assets/Logo.png"
+import Logo from "../assets/logo.png"
 
 
 import { FaEye } from "react-icons/fa";
@@ -11,11 +11,11 @@ import { authDataContext } from '../context/AuthContext';
 import axios from "axios"
 import { adminDataContext } from '../context/AdminContext';
 import { useNavigate } from "react-router-dom";
-
-
-
+import { toast } from 'react-toastify';
+import Loading from '../components/Loading';
 
 const Login = () => {
+    const [loading,setLoading] = useState(false)
     const [email , setEmail] = useState("")
             const [password , setPassword] = useState("")
             const[show , setShow] = useState(false)
@@ -26,17 +26,21 @@ const Login = () => {
 
 
             const AdminLogin =  async(e) =>{
+                setLoading(true)
                 try {
                     e.preventDefault()
                     const result =  await axios.post( serverUrl + "/api/auth/adminlogin",{email,password},
                         {withCredentials:true}
                     )
+                    setLoading(false)
                     console.log(result)
+                    toast.success("Admin login Successfully")
                     getAdmin();
                     navigate("/")
                     
                 } catch (error) {
                     console.log(error)
+                    toast.error("Admin login failed")
                 }
 
 
@@ -69,7 +73,7 @@ const Login = () => {
                                < IoMdEyeOff className='w-[20px] h-[20px] cursor-pointer absolute right-[5%] bottom-[47%] ' onClick={()=>setShow( prev=> !prev)} />
                            }
    
-                       <button className='w-[100%] h-[50px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold'>Login</button>
+                       <button className='w-[100%] h-[50px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold'>{loading ? <Loading/>: "Login"}</button>
                        
                        </div>
    

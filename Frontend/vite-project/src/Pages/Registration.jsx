@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import Logo from "../assets/Logo.png"
+import Logo from "../assets/logo.png"
 import { useNavigate } from 'react-router-dom'
 import google from "../assets/google.png"
 import { FaEye } from "react-icons/fa";

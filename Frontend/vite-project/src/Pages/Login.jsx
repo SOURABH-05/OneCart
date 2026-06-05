@@ -1,5 +1,5 @@
 import React, { useState,useContext } from 'react'
-import Logo from "../assets/Logo.png"
+import Logo from "../assets/logo.png"
 import { useNavigate } from 'react-router-dom'
 import google from "../assets/google.png"
 import { FaEye } from "react-icons/fa";
@@ -9,6 +9,8 @@ import axios from "axios"
 import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '../../utils/firebase';
 import { userDataContext } from '../context/userContext';
+import { toast } from 'react-toastify';
+import Loading from '../components/Loading';
 
 const login = () => {
     const navigate = useNavigate()
@@ -16,18 +18,22 @@ const login = () => {
 
     const {serverUrl} = useContext(authDataContext)
     const {getCurrentUser} =useContext(userDataContext)
+       let [loading,setLoading] = useState(false)
        
         const [email , setEmail] = useState("")
         const [password , setPassword] = useState("")
         
         const handleSingnUp = async(e)=>{
                 try {
+                    setLoading(true)
                     e.preventDefault();
                     const result = await axios.post(serverUrl + "/api/auth/login",{
                       email , password   
                     },{
                         withCredentials:true
                     })
+                    setLoading(false)
+                    toast.success("login Successfully")
                     console.log(result.data)
                     getCurrentUser()
                     navigate("/")
@@ -35,6 +41,7 @@ const login = () => {
                     
                 } catch (error) {
                     console.log(error)
+                    toast.error("login error")
                 }
         
             }
@@ -90,7 +97,7 @@ const login = () => {
                             < IoMdEyeOff className='w-[20px] h-[20px] cursor-pointer absolute right-[5%] bottom-[54%] ' onClick={()=>setShow( prev=> !prev)} />
                         }
 
-                    <button className='w-[100%] h-[50px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold'>Login</button>
+                    <button className='w-[100%] h-[50px] bg-[#6060f5] rounded-lg flex items-center justify-center mt-[20px] text-[17px] font-semibold'>{loading ? <Loading/> : "login"}</button>
                     <p className='flex gap-[10px]'>You haven't any account? <span className='text-[#5555f6cf] text-[17px] font-semibold cursor-pointer' onClick={()=>navigate("/signup")}>Create New Account</span></p>
                     </div>
 

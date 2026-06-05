@@ -1,28 +1,39 @@
 import React from 'react'
- import back1 from "../assets/back1.jpg"
- import back2 from "../assets/back2.jpg"
- import back3 from "../assets/back3.jpg"
- import back4 from "../assets/back4.jpg"
 
+// Using reliable Unsplash images for each category shown in the banner
+const slides = [
+  {
+    // Fashion / Clothing
+    src: "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=1600",
+    alt: "Fashion Collection"
+  },
+  {
+    // Shoes / Footwear
+    src: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=1600",
+    alt: "Premium Footwear"
+  },
+  {
+    // Grocery / Fresh Vegetables
+    src: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=1600",
+    alt: "Fresh Groceries"
+  },
+  {
+    // Dairy / Milk
+    src: "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=1600",
+    alt: "Dairy & Milk"
+  }
+]
 
 const BackGround = ({heroCount}) => {
-
-    
-  
-    if(heroCount === 0){
-        return <img src={back2} alt=""  className='w-[100%] h-[100%] float-left overflow-auto object-cover'/>
-    }
-    else if (heroCount === 1){
-        return <img src={back1} alt=""  className='w-[100%] h-[100%] float-left overflow-auto object-cover'/>
-    }
-    else if (heroCount === 2){
-        return <img src={back3} alt=""  className='w-[100%] h-[100%] float-left overflow-auto object-cover'/>
-    }
-    else if (heroCount === 3){
-        return <img src={back4} alt=""  className='w-[100%] h-[100%] float-left overflow-auto object-cover'/>
-    }
-
-  
+  const slide = slides[heroCount] || slides[0];
+  return (
+    <img
+      key={heroCount}
+      src={slide.src}
+      alt={slide.alt}
+      className='bg-slide-in w-[100%] h-[100%] float-left overflow-auto object-cover'
+    />
+  );
 }
 
 export default BackGround
