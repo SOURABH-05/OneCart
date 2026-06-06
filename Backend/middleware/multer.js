@@ -1,17 +1,13 @@
 import multer from 'multer'
 import fs from 'fs'
+import os from 'os'
 
 let storage = multer.diskStorage({
     destination:(req,file,cb)=>{
-        const dir = "./public";
-        if (!fs.existsSync(dir)){
-            fs.mkdirSync(dir, { recursive: true });
-        }
-        cb(null, dir)
-
+        cb(null, os.tmpdir())
     },
     filename:(req,file,cb)=>{
-         cb(null,file.originalname)
+         cb(null, Date.now() + '-' + file.originalname)
     }
 });
 
