@@ -36,7 +36,7 @@ app.use(cors({
     // Strip trailing slash from incoming origin just in case
     const cleanOrigin = origin.replace(/\/$/, '');
     
-    if (allowedOrigins.includes(cleanOrigin)) {
+    if (allowedOrigins.includes(cleanOrigin) || cleanOrigin.endsWith('.vercel.app')) {
       return callback(null, true);
     }
     
