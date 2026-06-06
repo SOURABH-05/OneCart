@@ -19,7 +19,7 @@ import OrderConfirmation from './Pages/OrderConfirmation';
 import NotFound from './Pages/NotFound';
 import Ai from './components/Ai';
 
-import { userDataContext } from './context/userContext';
+import { userDataContext } from './context/UserContext';
 
 // Wrapper to reduce boilerplate on every protected route
 const Protected = ({ element }) => {

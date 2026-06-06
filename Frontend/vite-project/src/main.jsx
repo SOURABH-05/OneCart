@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import AuthContext from './context/AuthContext.jsx';
 
 import ShopContext from './context/ShopContext.jsx';
-import UserContext from './context/userContext.jsx';
+import UserContext from './context/UserContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

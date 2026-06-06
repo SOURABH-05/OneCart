@@ -8,7 +8,7 @@ import { authDataContext } from '../context/AuthContext';
 import axios from "axios"
 import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '../../utils/firebase';
-import { userDataContext } from '../context/userContext';
+import { userDataContext } from '../context/UserContext';
 
 const Registration = () => {
     const navigate = useNavigate()

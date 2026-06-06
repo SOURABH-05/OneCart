@@ -3,7 +3,7 @@ import logo from '../assets/logo.png';
 import { IoSearchCircle, IoSearchCircleOutline } from 'react-icons/io5';
 import { FaUserCircle } from 'react-icons/fa';
 import { MdContacts, MdOutlineShoppingCart } from 'react-icons/md';
-import { userDataContext } from '../context/userContext';
+import { userDataContext } from '../context/UserContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { authDataContext } from '../context/AuthContext';
 import { HiOutlineCollection } from 'react-icons/hi';
