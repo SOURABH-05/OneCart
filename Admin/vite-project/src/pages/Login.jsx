@@ -40,7 +40,8 @@ const Login = () => {
                     
                 } catch (error) {
                     console.log(error)
-                    toast.error("Admin login failed")
+                    setLoading(false)
+                    toast.error(error.response?.data?.message || "Admin login failed")
                 }
 
 
