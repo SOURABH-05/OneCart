@@ -17,8 +17,24 @@ const Port = process.env.PORT || 3000;
 
 app.use(express.json())
 app.use(cookieParser())
+// Build allowed origins from env vars + local dev fallbacks
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:5175",
+  "http://localhost:5176",
+  "http://localhost:5177",
+  ...(process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(",").map(u => u.trim()) : []),
+  ...(process.env.ADMIN_URL    ? process.env.ADMIN_URL.split(",").map(u => u.trim())    : []),
+];
+
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "http://localhost:5176", "http://localhost:5177"],
+  origin: (origin, callback) => {
+    // Allow requests with no origin (e.g. mobile apps, Postman, curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    callback(new Error(`CORS blocked: ${origin}`));
+  },
   credentials: true
 }))
 
