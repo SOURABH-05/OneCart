@@ -132,7 +132,19 @@ function Add() {
        <div className='w-[80%]  flex items-center  gap-[10px] flex-wrap '>
         <div className='md:w-[30%] w-[100%] flex items-start sm:justify-center flex-col  gap-[10px]'>
           <p className='text-[20px] md:text-[25px]  font-semibold w-[100%]'>Product Category</p>
-          <select name="" id="" className='bg-slate-600 w-[60%] px-[10px] py-[7px] rounded-lg hover:border-[#46d1f7] border-[2px] ' onChange={(e)=>setCategory(e.target.value)}>
+          <select name="" id="" className='bg-slate-600 w-[60%] px-[10px] py-[7px] rounded-lg hover:border-[#46d1f7] border-[2px] ' onChange={(e)=>{
+            const cat = e.target.value;
+            setCategory(cat);
+            if (cat === 'Clothing') setSubCategory('TopWear');
+            else if (cat === 'Shoes') setSubCategory('Sneakers');
+            else if (cat === 'Dairy') setSubCategory('Milk');
+            else if (cat === 'Grocery') setSubCategory('Snacks');
+            else setSubCategory('General');
+            
+            if (!['Clothing', 'Shoes'].includes(cat)) {
+              setSizes([]);
+            }
+          }}>
             <option value="Clothing">Clothing</option>
             <option value="Shoes">Shoes</option>
             <option value="Dairy">Dairy</option>
@@ -143,11 +155,31 @@ function Add() {
         </div>
         <div className='md:w-[30%] w-[100%] flex items-start sm:justify-center flex-col  gap-[10px]'>
           <p className='text-[20px] md:text-[25px]  font-semibold w-[100%]'>Sub-Category</p>
-          <select name="" id="" className='bg-slate-600 w-[60%] px-[10px] py-[7px] rounded-lg hover:border-[#46d1f7] border-[2px] ' onChange={(e)=>setSubCategory(e.target.value)
-          }>
-            <option value="TopWear">TopWear</option>
-            <option value="BottomWear">BottomWear</option>
-            <option value="WinterWear">WinterWear</option>
+          <select name="" id="" className='bg-slate-600 w-[60%] px-[10px] py-[7px] rounded-lg hover:border-[#46d1f7] border-[2px] ' onChange={(e)=>setSubCategory(e.target.value)}>
+            {category === "Clothing" && <>
+              <option value="TopWear">TopWear</option>
+              <option value="BottomWear">BottomWear</option>
+              <option value="WinterWear">WinterWear</option>
+            </>}
+            {category === "Shoes" && <>
+              <option value="Sneakers">Sneakers</option>
+              <option value="Formal">Formal</option>
+              <option value="Sports">Sports</option>
+            </>}
+            {category === "Dairy" && <>
+              <option value="Milk">Milk</option>
+              <option value="Cheese">Cheese</option>
+              <option value="Yogurt">Yogurt</option>
+            </>}
+            {category === "Grocery" && <>
+              <option value="Snacks">Snacks</option>
+              <option value="Beverages">Beverages</option>
+              <option value="Spices">Spices</option>
+            </>}
+            {["Milk", "Butter"].includes(category) && <>
+              <option value="General">General</option>
+              <option value="Premium">Premium</option>
+            </>}
           </select>
         </div>
        </div>
@@ -160,22 +192,24 @@ function Add() {
        </div>
 
 
-       <div className='w-[80%] h-[220px] md:h-[100px] flex items-start justify-center flex-col gap-[10px] py-[10px] md:py-[0px]'>
-        <p className='text-[20px] md:text-[25px]  font-semibold'>Product Size</p>
+       {['Clothing', 'Shoes'].includes(category) && (
+         <div className='w-[80%] h-[220px] md:h-[100px] flex items-start justify-center flex-col gap-[10px] py-[10px] md:py-[0px]'>
+          <p className='text-[20px] md:text-[25px]  font-semibold'>Product Size</p>
 
-        <div className='flex items-center justify-start gap-[15px] flex-wrap'>
-          <div className={`px-[20px] py-[7px] rounded-lg bg-slate-600 text-[18px] hover:border-[#46d1f7] border-[2px] cursor-pointer ${sizes.includes("S") ? "bg-green-400 text-black border-[#46d1f7]" : ""}`} onClick={()=>setSizes(prev => prev.includes("S") ? prev.filter(item => item !== "S") : [...prev , "S"])}>S</div>
+          <div className='flex items-center justify-start gap-[15px] flex-wrap'>
+            <div className={`px-[20px] py-[7px] rounded-lg bg-slate-600 text-[18px] hover:border-[#46d1f7] border-[2px] cursor-pointer ${sizes.includes("S") ? "bg-green-400 text-black border-[#46d1f7]" : ""}`} onClick={()=>setSizes(prev => prev.includes("S") ? prev.filter(item => item !== "S") : [...prev , "S"])}>S</div>
 
-          <div className={`px-[20px] py-[7px] rounded-lg bg-slate-600 text-[18px] hover:border-[#46d1f7] border-[2px] cursor-pointer ${sizes.includes("M") ? "bg-green-400 text-black border-[#46d1f7]" : ""}`} onClick={()=>setSizes(prev => prev.includes("M") ? prev.filter(item => item !== "M") : [...prev , "M"])}>M</div>
+            <div className={`px-[20px] py-[7px] rounded-lg bg-slate-600 text-[18px] hover:border-[#46d1f7] border-[2px] cursor-pointer ${sizes.includes("M") ? "bg-green-400 text-black border-[#46d1f7]" : ""}`} onClick={()=>setSizes(prev => prev.includes("M") ? prev.filter(item => item !== "M") : [...prev , "M"])}>M</div>
 
-          <div className={`px-[20px] py-[7px] rounded-lg bg-slate-600 text-[18px] hover:border-[#46d1f7] border-[2px] cursor-pointer ${sizes.includes("L") ? "bg-green-400 text-black border-[#46d1f7]" : ""}`} onClick={()=>setSizes(prev => prev.includes("L") ? prev.filter(item => item !== "L") : [...prev , "L"])}>L</div>
+            <div className={`px-[20px] py-[7px] rounded-lg bg-slate-600 text-[18px] hover:border-[#46d1f7] border-[2px] cursor-pointer ${sizes.includes("L") ? "bg-green-400 text-black border-[#46d1f7]" : ""}`} onClick={()=>setSizes(prev => prev.includes("L") ? prev.filter(item => item !== "L") : [...prev , "L"])}>L</div>
 
-          <div className={`px-[20px] py-[7px] rounded-lg bg-slate-600 text-[18px] hover:border-[#46d1f7] border-[2px] cursor-pointer ${sizes.includes("XL") ? "bg-green-400 text-black border-[#46d1f7]" : ""}`} onClick={()=>setSizes(prev => prev.includes("XL") ? prev.filter(item => item !== "XL") : [...prev , "XL"])}>XL</div>
+            <div className={`px-[20px] py-[7px] rounded-lg bg-slate-600 text-[18px] hover:border-[#46d1f7] border-[2px] cursor-pointer ${sizes.includes("XL") ? "bg-green-400 text-black border-[#46d1f7]" : ""}`} onClick={()=>setSizes(prev => prev.includes("XL") ? prev.filter(item => item !== "XL") : [...prev , "XL"])}>XL</div>
 
-          <div className={`px-[20px] py-[7px] rounded-lg bg-slate-600 text-[18px] hover:border-[#46d1f7] border-[2px] cursor-pointer ${sizes.includes("XXL") ? "bg-green-400 text-black border-[#46d1f7]" : ""}`} onClick={()=>setSizes(prev => prev.includes("XXL") ? prev.filter(item => item !== "XXL") : [...prev , "XXL"])}>XXL</div>
-        </div>
+            <div className={`px-[20px] py-[7px] rounded-lg bg-slate-600 text-[18px] hover:border-[#46d1f7] border-[2px] cursor-pointer ${sizes.includes("XXL") ? "bg-green-400 text-black border-[#46d1f7]" : ""}`} onClick={()=>setSizes(prev => prev.includes("XXL") ? prev.filter(item => item !== "XXL") : [...prev , "XXL"])}>XXL</div>
+          </div>
 
-       </div>
+         </div>
+       )}
 
        <div className='w-[80%] flex items-center justify-start gap-[10px] mt-[20px]'>
         <input type="checkbox" id='checkbox' className='w-[25px] h-[25px] cursor-pointer' onChange={()=>setBestSeller(prev => !prev)}/>
