@@ -40,8 +40,8 @@ export const Registration = async (req, res) => {
     // Set cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // set true in production
-      sameSite: "strict",
+      secure: true, // required for cross-origin
+      sameSite: "none", // required for cross-origin
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
@@ -75,8 +75,8 @@ export const login = async (req, res) => {
     // Set cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // set true in production
-      sameSite: "strict",
+      secure: true, // required for cross-origin
+      sameSite: "none", // required for cross-origin
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -90,7 +90,7 @@ export const login = async (req, res) => {
 // Logout
 export const logout = async (req, res) => {
   try {
-    res.clearCookie("token", { httpOnly: true, sameSite: "strict" });
+    res.clearCookie("token", { httpOnly: true, secure: true, sameSite: "none" });
     return res.status(200).json({ message: "Logout successful" });
   } catch (error) {
     console.error(error);
@@ -115,8 +115,8 @@ export const googleLogin = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "strict",
+      secure: true,
+      sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
@@ -142,8 +142,8 @@ export const adminLogin = async(req,res)=>{
     // Set cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // set true in production
-      sameSite: "strict",
+      secure: true, // required for cross-origin
+      sameSite: "none", // required for cross-origin
       maxAge: 1 * 24 * 60 * 60 * 1000,
     });
 
