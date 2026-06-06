@@ -24,16 +24,24 @@ const allowedOrigins = [
   "http://localhost:5175",
   "http://localhost:5176",
   "http://localhost:5177",
-  ...(process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(",").map(u => u.trim()) : []),
-  ...(process.env.ADMIN_URL    ? process.env.ADMIN_URL.split(",").map(u => u.trim())    : []),
+  ...(process.env.FRONTEND_URL ? process.env.FRONTEND_URL.split(",").map(u => u.trim().replace(/\/$/, '')) : []),
+  ...(process.env.ADMIN_URL    ? process.env.ADMIN_URL.split(",").map(u => u.trim().replace(/\/$/, ''))    : []),
 ];
 
 app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (e.g. mobile apps, Postman, curl)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    callback(new Error(`CORS blocked: ${origin}`));
+    
+    // Strip trailing slash from incoming origin just in case
+    const cleanOrigin = origin.replace(/\/$/, '');
+    
+    if (allowedOrigins.includes(cleanOrigin)) {
+      return callback(null, true);
+    }
+    
+    // Pass false instead of new Error() so it doesn't crash the server with 500
+    callback(null, false);
   },
   credentials: true
 }))
